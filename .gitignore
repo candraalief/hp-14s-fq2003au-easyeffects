@@ -1,0 +1,10 @@
+# OS & Editor files
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/
+
+# EasyEffects runtime/backups
+*.bak
+*.tmp
