@@ -5,62 +5,42 @@
 [![PipeWire](https://img.shields.io/badge/Audio-PipeWire-red.svg)](https://pipewire.org/)
 [![Hardware](https://img.shields.io/badge/Device-HP%2014s--fq2003au-orange.svg)]()
 
-A complete, high-performance, anti-clipping **EasyEffects** audio processing pipeline specifically tailored for the **HP 14s Laptop series** (specifically **HP 14s-fq2003au** with AMD Ryzen 5 5625U and Realtek ALC236 audio).
+A finely-tuned, high-fidelity **EasyEffects** audio preset with **Convolution (IRS)** specifically crafted for the **HP 14s Laptop series** (specifically **HP 14s-fq2003au** with AMD Ryzen 5 5625U and Realtek ALC236 audio).
 
 ---
 
 ## 🧐 The Problem with Default Linux Audio on HP 14s
 
-On Windows, HP laptops rely on proprietary DTS / Realtek APO drivers that heavily process sound in software to compensate for small laptop speakers. When switching to Linux (Fedora, Arch, Ubuntu, etc.), that processing is absent, resulting in:
+On Windows, HP laptops rely on proprietary DTS / Realtek APO software to compensate for small laptop speakers. When switching to Linux (Fedora, Arch, Ubuntu, etc.), that processing is absent, resulting in:
 - Thin, tinny, and hollow sound.
 - Violent chassis vibration and buzzing (*plastic rattle*) when low bass notes are played.
-- Severe distortion and harsh digital clipping when users try to manually boost the equalizer by +8 dB to +9 dB without proper digital headroom and limiter calibration.
+- Severe distortion and harsh digital clipping when users try to manually boost the equalizer by +8 dB to +9 dB without proper digital headroom.
 
 ---
 
-## ✨ The Solution: Full `HP-14s-FQ2003AU` Processing Pipeline
+## ✨ The Best Setting: Convolver (Razor Surround 48k Z-Edition)
 
-This preset integrates the warmth and punch of custom EQ curves with professional DSP modules (**Bass Enhancer**, **Compressor**, **AutoGain**, and **Limiter**) for a full, loud, and pristine listening experience.
+This preset utilizes a calibrated **Convolution Impulse Response (FIR filter)** to completely transform the laptop's soundstage:
 
-![Equalizer Preview](assets/eq-preview.png)
+![Convolver Preview](assets/convolver-preview.png)
 
-### 🎛️ Complete Plugin Chain:
-
-```mermaid
-graph LR
-    Input[Audio Source] --> Filter[High-Pass 75Hz]
-    Filter --> Bass[Bass Enhancer]
-    Bass --> EQ[9-Band EQ]
-    EQ --> Comp[Compressor]
-    Comp --> AutoGain[AutoGain]
-    AutoGain --> Limiter[Peak Limiter]
-    Limiter --> Speaker[Laptop Speakers]
-```
-
-1. **Sub-Bass Cut (High-Pass Filter at 75 Hz):**
-   - Eliminates frequencies below 75 Hz that small laptop speaker cones cannot physically reproduce, stopping chassis vibration (*rattling/buzzing*).
-2. **Psychoacoustic Bass Enhancer:**
-   - Generates upper harmonic overtones (60–140 Hz) that trick the human ear into hearing deep bass without over-excursion of the physical speaker drivers.
-3. **9-Band Precision Equalizer:**
-   - **142 Hz (+8.00 dB, Q 1.50):** Rich lower-end warmth.
-   - **220 Hz & 338 Hz (+9.00 dB, Q 1.50):** Solid vocal body and instrument punch.
-   - **522 Hz (+4.00 dB, Q 2.35):** Lower midrange clarity.
-   - **2.5 kHz (+4.58 dB, Q 1.50):** Vocal presence and articulation.
-   - **5.0 kHz & 8.0 kHz (+3.33 dB / +3.00 dB):** Treble detail and crispness.
-   - **10.7 kHz & 16.5 kHz (+4.00 dB / +7.14 dB, Q 2.35):** Airy treble shimmer.
-   - **Calibrated Digital Headroom:** Pre-attenuated by `-7.5 dB` so high boosts never clip at 0 dBFS.
-4. **Dynamic Range Compressor (DRC):**
-   - Smooths out dynamic range (2.8:1 ratio, 15ms attack, 180ms release), bringing out subtle details in music and videos while keeping punchy impacts controlled.
-5. **Intelligent AutoGain (-16 LUFS):**
-   - Automatically maintains a consistent perceived loudness across YouTube, Spotify, games, and system media so you don't have to constantly adjust the volume slider.
-6. **Transparent Peak Limiter (-0.5 dB):**
-   - Hermetic thin brickwall peak limiter acts as the final safety shield, ensuring no sound ever clips or distorts, even at 100% volume.
+### 🎛️ Why This Convolver Profile is the Best:
+1. **Punchy, Clean Bass (+50 Bass Low Latency):**
+   - Delivers deep, resonant bass without muddying mids or causing physical speaker bottom-out and chassis rattle.
+2. **True Stereo Soundstage (100% Width):**
+   - Expands the perceived soundstage far beyond the physical boundaries of the laptop speakers, creating an immersive, room-filling experience.
+3. **Ultra-Low Latency & High Fidelity:**
+   - 48,000 Hz native sampling rate, 3,000 samples, 0.062 s duration. Zero noticeable audio lag in gaming, videos, and music.
+4. **Zero Phase Distortion:**
+   - Unlike multi-band parametric EQs which can introduce phase shifting at steep boost curves, convolution FIR filters process all frequencies with optimal phase response.
+5. **Standby Modules Available:**
+   - The preset also bundles standby EQ, Filter, Compressor, and Limiter modules ready to be toggled if custom fine-tuning is desired.
 
 ---
 
 ## 🚀 Quick Installation
 
-### Option 1: One-Line Installer (Recommended)
+### Option 1: One-Line Automated Installer (Recommended)
 
 Open your terminal and run:
 
@@ -70,24 +50,37 @@ cd hp-14s-fq2003au-easyeffects
 ./install.sh
 ```
 
-The script will automatically copy the preset to your EasyEffects directory and activate it.
+The script will automatically:
+1. Copy the preset `HP-14s-FQ2003AU.json` to `~/.local/share/easyeffects/output/`.
+2. Copy the required kernel file `Razor Surround ((48k Z-Edition)) 4.Stereo +50 Bass Low Latency.irs` to `~/.local/share/easyeffects/irs/`.
+3. Activate the preset immediately in EasyEffects.
+
+---
 
 ### Option 2: Manual Installation
 
-1. Copy `HP-14s-FQ2003AU.json` to your EasyEffects output presets directory:
+1. **Copy the IRS Kernel:**
+   ```bash
+   mkdir -p ~/.local/share/easyeffects/irs
+   cp "irs/Razor Surround ((48k Z-Edition)) 4.Stereo +50 Bass Low Latency.irs" ~/.local/share/easyeffects/irs/
+   ```
+
+2. **Copy the Preset JSON:**
    ```bash
    mkdir -p ~/.local/share/easyeffects/output
    cp HP-14s-FQ2003AU.json ~/.local/share/easyeffects/output/
    ```
-2. Open **EasyEffects**.
-3. Go to **Presets** (top-left or bottom icon depending on theme) $\rightarrow$ **Output**.
-4. Select **`HP-14s-FQ2003AU`** and click **Load**.
+
+3. **Load in EasyEffects:**
+   - Open **EasyEffects**.
+   - Go to **Presets** $\rightarrow$ **Output**.
+   - Select **`HP-14s-FQ2003AU`** and click **Load**.
 
 ---
 
 ## 🧪 Testing Your Audio
 
-We included an automated frequency test suite to verify the tuning:
+We included an automated frequency test suite to verify your audio:
 
 ```bash
 ./audio-test.sh
@@ -96,7 +89,7 @@ We included an automated frequency test suite to verify the tuning:
 This runs:
 - Sweep tone (100 Hz $\rightarrow$ 15,000 Hz)
 - 142 Hz bass resonance test
-- 220 Hz & 338 Hz low-mid stress test (anti-clipping verification)
+- 220 Hz & 338 Hz low-mid stress test
 - 1000 Hz baseline reference
 - High treble harshness check (10.7 kHz & 16.5 kHz)
 - Pink noise tonal balance

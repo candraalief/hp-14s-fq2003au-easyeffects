@@ -13,7 +13,8 @@ NC='\033[0m'
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PRESET_NAME="HP-14s-FQ2003AU"
 PRESET_FILE="$SCRIPT_DIR/$PRESET_NAME.json"
-TARGET_DIR="$HOME/.local/share/easyeffects/output"
+TARGET_OUTPUT_DIR="$HOME/.local/share/easyeffects/output"
+TARGET_IRS_DIR="$HOME/.local/share/easyeffects/irs"
 
 echo -e "${CYAN}╔═══════════════════════════════════════════════════════╗${NC}"
 echo -e "${CYAN}║   HP 14s-fq2003au EasyEffects Preset Installer        ║${NC}"
@@ -42,10 +43,16 @@ if [[ ! -f "$PRESET_FILE" ]]; then
     exit 1
 fi
 
-# 3. Create target directory and copy preset
-echo -e "${GREEN}[*] Copying preset to $TARGET_DIR...${NC}"
-mkdir -p "$TARGET_DIR"
-cp -v "$PRESET_FILE" "$TARGET_DIR/"
+# 3. Create target directories and copy preset + IRS files
+echo -e "${GREEN}[*] Copying preset to $TARGET_OUTPUT_DIR...${NC}"
+mkdir -p "$TARGET_OUTPUT_DIR"
+cp -v "$PRESET_FILE" "$TARGET_OUTPUT_DIR/"
+
+if [[ -d "$SCRIPT_DIR/irs" ]]; then
+    echo -e "${GREEN}[*] Copying impulse response (.irs) files to $TARGET_IRS_DIR...${NC}"
+    mkdir -p "$TARGET_IRS_DIR"
+    cp -v "$SCRIPT_DIR/irs/"*.irs "$TARGET_IRS_DIR/" 2>/dev/null || true
+fi
 
 # 4. Load preset if EasyEffects CLI is available
 if command -v easyeffects &>/dev/null; then

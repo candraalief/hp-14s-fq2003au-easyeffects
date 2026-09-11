@@ -2,6 +2,7 @@
     "output": {
         "blocklist": [],
         "plugins_order": [
+            "convolver#0",
             "filter#0",
             "bass_enhancer#0",
             "equalizer#0",
@@ -12,7 +13,7 @@
         "bass_enhancer#0": {
             "amount": 3.8,
             "blend": 0.0,
-            "bypass": false,
+            "bypass": true,
             "floor": 60.0,
             "floor-active": true,
             "harmonics": 7.5,
@@ -23,7 +24,7 @@
         },
         "equalizer#0": {
             "balance": 0.0,
-            "bypass": false,
+            "bypass": true,
             "decramp": "Off",
             "input-gain": -1.5,
             "mode": "IIR",
@@ -237,7 +238,7 @@
         },
         "compressor#0": {
             "attack": 15.0,
-            "bypass": false,
+            "bypass": true,
             "boost-amount": 4.0,
             "boost-threshold": -72.0,
             "dry-level": -100.0,
@@ -270,7 +271,7 @@
             "alr-knee": 0.0,
             "alr-release": 50.0,
             "attack": 5.0,
-            "bypass": false,
+            "bypass": true,
             "dithering": "None",
             "external-sidechain": false,
             "gain-boost": true,
@@ -285,7 +286,7 @@
             "threshold": -0.5
         },
         "autogain#0": {
-            "bypass": false,
+            "bypass": true,
             "input-gain": 0.0,
             "maximum-history": 15,
             "output-gain": 0.0,
@@ -295,7 +296,7 @@
         },
         "filter#0": {
             "balance": 0.0,
-            "bypass": false,
+            "bypass": true,
             "equal-mode": "IIR",
             "frequency": 75.0,
             "gain": 0.0,
@@ -306,6 +307,21 @@
             "slope": "x2",
             "type": "High-pass",
             "width": 4.0
+        },
+        "convolver#0": {
+            "autogain": false,
+            "bypass": false,
+            "dry": -100.0,
+            "input-gain": 0.0,
+            "ir-width": 100,
+            "kernel-name": "Razor Surround ((48k Z-Edition)) 4.Stereo +50 Bass Low Latency",
+            "output-gain": 0.0,
+            "sofa": {
+                "azimuth": 0.0,
+                "elevation": 0.0,
+                "radius": 1.0
+            },
+            "wet": 0.0
         }
     }
 }
