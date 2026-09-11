@@ -5,7 +5,7 @@
 [![PipeWire](https://img.shields.io/badge/Audio-PipeWire-red.svg)](https://pipewire.org/)
 [![Hardware](https://img.shields.io/badge/Device-HP%2014s--fq2003au-orange.svg)]()
 
-A finely-tuned, anti-clipping **EasyEffects** audio preset specifically tailored for the **HP 14s Laptop series** (specifically **HP 14s-fq2003au** with AMD Ryzen 5 5625U and Realtek ALC236 audio).
+A complete, high-performance, anti-clipping **EasyEffects** audio processing pipeline specifically tailored for the **HP 14s Laptop series** (specifically **HP 14s-fq2003au** with AMD Ryzen 5 5625U and Realtek ALC236 audio).
 
 ---
 
@@ -14,32 +14,47 @@ A finely-tuned, anti-clipping **EasyEffects** audio preset specifically tailored
 On Windows, HP laptops rely on proprietary DTS / Realtek APO drivers that heavily process sound in software to compensate for small laptop speakers. When switching to Linux (Fedora, Arch, Ubuntu, etc.), that processing is absent, resulting in:
 - Thin, tinny, and hollow sound.
 - Violent chassis vibration and buzzing (*plastic rattle*) when low bass notes are played.
-- Severe distortion and harsh digital clipping when users try to manually boost the equalizer by +8 dB to +9 dB without proper digital headroom.
+- Severe distortion and harsh digital clipping when users try to manually boost the equalizer by +8 dB to +9 dB without proper digital headroom and limiter calibration.
 
 ---
 
-## ✨ The Solution: `HP-14s-FQ2003AU` Preset
+## ✨ The Solution: Full `HP-14s-FQ2003AU` Processing Pipeline
 
-This preset delivers the rich warmth, vocal clarity, and punchy sound signature of custom curves while **eliminating distortion, rattling, and clipping**.
+This preset integrates the warmth and punch of custom EQ curves with professional DSP modules (**Bass Enhancer**, **Compressor**, **AutoGain**, and **Limiter**) for a full, loud, and pristine listening experience.
 
 ![Equalizer Preview](assets/eq-preview.png)
 
-### 🛠️ Acoustic Calibration Breakdown:
-1. **75 Hz Sub-Bass Cut (High-Pass Filter):**
-   - Tiny 2W laptop speaker diaphragms physically cannot produce frequencies below 75 Hz. Cutting them removes unnecessary cone excursion, eliminating laptop body rattle and distortion.
-2. **9-Band Precision Equalizer:**
-   - **142 Hz (+8.00 dB, Q 1.50):** Rich lower-end warmth and punch.
-   - **220 Hz & 338 Hz (+9.00 dB, Q 1.50):** Solid vocal body and instrument fullness.
+### 🎛️ Complete Plugin Chain:
+
+```mermaid
+graph LR
+    Input[Audio Source] --> Filter[High-Pass 75Hz]
+    Filter --> Bass[Bass Enhancer]
+    Bass --> EQ[9-Band EQ]
+    EQ --> Comp[Compressor]
+    Comp --> AutoGain[AutoGain]
+    AutoGain --> Limiter[Peak Limiter]
+    Limiter --> Speaker[Laptop Speakers]
+```
+
+1. **Sub-Bass Cut (High-Pass Filter at 75 Hz):**
+   - Eliminates frequencies below 75 Hz that small laptop speaker cones cannot physically reproduce, stopping chassis vibration (*rattling/buzzing*).
+2. **Psychoacoustic Bass Enhancer:**
+   - Generates upper harmonic overtones (60–140 Hz) that trick the human ear into hearing deep bass without over-excursion of the physical speaker drivers.
+3. **9-Band Precision Equalizer:**
+   - **142 Hz (+8.00 dB, Q 1.50):** Rich lower-end warmth.
+   - **220 Hz & 338 Hz (+9.00 dB, Q 1.50):** Solid vocal body and instrument punch.
    - **522 Hz (+4.00 dB, Q 2.35):** Lower midrange clarity.
    - **2.5 kHz (+4.58 dB, Q 1.50):** Vocal presence and articulation.
    - **5.0 kHz & 8.0 kHz (+3.33 dB / +3.00 dB):** Treble detail and crispness.
-   - **10.7 kHz & 16.5 kHz (+4.00 dB / +7.14 dB, Q 2.35):** High-frequency "air" and shimmer.
-3. **Calibrated Digital Headroom (-7.5 dB):**
-   - High boost (+9 dB) without headroom exceeds 0 dBFS and causes terrible digital clipping. This preset attenuates gain by `-7.5 dB` (`-1.5 dB` input gain + `-6.0 dB` output gain), keeping the exact frequency curve intact with **zero clipping**.
-4. **Transparent Brickwall Limiter:**
-   - Standby peak limiter (`-0.5 dB` threshold, `15 ms` smooth release) ensures sudden audio spikes never clip or damage your speakers, even at 100% volume.
-5. **No Dynamic Squashing:**
-   - Aggressive compressors and auto-gain modules are bypassed, preserving the punchy, open dynamic range of your music and media.
+   - **10.7 kHz & 16.5 kHz (+4.00 dB / +7.14 dB, Q 2.35):** Airy treble shimmer.
+   - **Calibrated Digital Headroom:** Pre-attenuated by `-7.5 dB` so high boosts never clip at 0 dBFS.
+4. **Dynamic Range Compressor (DRC):**
+   - Smooths out dynamic range (2.8:1 ratio, 15ms attack, 180ms release), bringing out subtle details in music and videos while keeping punchy impacts controlled.
+5. **Intelligent AutoGain (-16 LUFS):**
+   - Automatically maintains a consistent perceived loudness across YouTube, Spotify, games, and system media so you don't have to constantly adjust the volume slider.
+6. **Transparent Peak Limiter (-0.5 dB):**
+   - Hermetic thin brickwall peak limiter acts as the final safety shield, ensuring no sound ever clips or distorts, even at 100% volume.
 
 ---
 

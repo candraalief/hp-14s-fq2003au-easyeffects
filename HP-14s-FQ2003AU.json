@@ -3,16 +3,16 @@
         "blocklist": [],
         "plugins_order": [
             "filter#0",
+            "bass_enhancer#0",
             "equalizer#0",
             "compressor#0",
-            "limiter#0",
             "autogain#0",
-            "bass_enhancer#0"
+            "limiter#0"
         ],
         "bass_enhancer#0": {
             "amount": 3.8,
             "blend": 0.0,
-            "bypass": true,
+            "bypass": false,
             "floor": 60.0,
             "floor-active": true,
             "harmonics": 7.5,
@@ -237,7 +237,7 @@
         },
         "compressor#0": {
             "attack": 15.0,
-            "bypass": true,
+            "bypass": false,
             "boost-amount": 4.0,
             "boost-threshold": -72.0,
             "dry-level": -100.0,
@@ -285,7 +285,7 @@
             "threshold": -0.5
         },
         "autogain#0": {
-            "bypass": true,
+            "bypass": false,
             "input-gain": 0.0,
             "maximum-history": 15,
             "output-gain": 0.0,
