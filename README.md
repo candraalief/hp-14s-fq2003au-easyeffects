@@ -1,11 +1,15 @@
 # HP 14s-fq2003au EasyEffects Audio Preset 🎧🔊
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](CONTRIBUTING.md)
 [![EasyEffects](https://img.shields.io/badge/EasyEffects-8.0%2B-blue.svg)](https://github.com/wwmm/easyeffects)
 [![PipeWire](https://img.shields.io/badge/Audio-PipeWire-red.svg)](https://pipewire.org/)
 [![Hardware](https://img.shields.io/badge/Device-HP%2014s--fq2003au-orange.svg)]()
 
-A finely-tuned, high-fidelity **EasyEffects** audio preset with **Convolution (IRS)** specifically crafted for the **HP 14s Laptop series** (specifically **HP 14s-fq2003au** with AMD Ryzen 5 5625U and Realtek ALC236 audio).
+A finely-tuned, high-fidelity **EasyEffects** audio preset with **Convolution (IRS)** and a complete DSP master chain specifically crafted for the **HP 14s Laptop series** (specifically **HP 14s-fq2003au** with AMD Ryzen 5 5625U and Realtek ALC236 audio).
+
+This project is open-source and ready for community expansion to support other HP laptop variants and alternative sound profiles.
 
 ---
 
@@ -14,27 +18,44 @@ A finely-tuned, high-fidelity **EasyEffects** audio preset with **Convolution (I
 On Windows, HP laptops rely on proprietary DTS / Realtek APO software to compensate for small laptop speakers. When switching to Linux (Fedora, Arch, Ubuntu, etc.), that processing is absent, resulting in:
 - Thin, tinny, and hollow sound.
 - Violent chassis vibration and buzzing (*plastic rattle*) when low bass notes are played.
-- Severe distortion and harsh digital clipping when users try to manually boost the equalizer by +8 dB to +9 dB without proper digital headroom.
+- Severe distortion and harsh digital clipping when users try to manually boost the equalizer without proper digital headroom, compression, and brickwall limiting.
 
 ---
 
-## ✨ The Best Setting: Convolver (Razor Surround 48k Z-Edition)
+## ✨ The Complete Audio Architecture
 
-This preset utilizes a calibrated **Convolution Impulse Response (FIR filter)** to completely transform the laptop's soundstage:
+This preset combines a calibrated **Convolution Impulse Response (FIR filter)** with a dedicated multi-stage DSP mastering pipeline:
 
 ![Convolver Preview](assets/convolver-preview.png)
 
-### 🎛️ Why This Convolver Profile is the Best:
-1. **Punchy, Clean Bass (+50 Bass Low Latency):**
-   - Delivers deep, resonant bass without muddying mids or causing physical speaker bottom-out and chassis rattle.
-2. **True Stereo Soundstage (100% Width):**
-   - Expands the perceived soundstage far beyond the physical boundaries of the laptop speakers, creating an immersive, room-filling experience.
-3. **Ultra-Low Latency & High Fidelity:**
-   - 48,000 Hz native sampling rate, 3,000 samples, 0.062 s duration. Zero noticeable audio lag in gaming, videos, and music.
-4. **Zero Phase Distortion:**
-   - Unlike multi-band parametric EQs which can introduce phase shifting at steep boost curves, convolution FIR filters process all frequencies with optimal phase response.
-5. **Standby Modules Available:**
-   - The preset also bundles standby EQ, Filter, Compressor, and Limiter modules ready to be toggled if custom fine-tuning is desired.
+### 🎛️ Complete Plugin Chain:
+
+```mermaid
+graph LR
+    Input[Audio Source] --> Convolver["Convolver (Razor Surround 48k)"]
+    Convolver --> Filter["High-Pass Filter (75Hz)"]
+    Filter --> Bass["Bass Enhancer (Harmonics)"]
+    Bass --> EQ["9-Band Precision EQ"]
+    EQ --> Comp["Dynamic Compressor"]
+    Comp --> AutoGain["AutoGain (-16 LUFS)"]
+    AutoGain --> Limiter["Peak Limiter (-0.5 dB)"]
+    Limiter --> Speaker["HP Laptop Speakers"]
+```
+
+1. **Convolver (Razor Surround 48k Z-Edition +50 Bass Low Latency):**
+   - Applies an acoustic FIR impulse response giving a wide, room-filling stereo soundstage with punchy, resonant bass without phase distortion or audio latency (0.062s duration).
+2. **Sub-Bass Cut (High-Pass Filter at 75 Hz):**
+   - Eliminates useless frequencies below 75 Hz that small laptop speaker cones cannot physically reproduce, stopping chassis vibration (*rattling/buzzing*).
+3. **Psychoacoustic Bass Enhancer:**
+   - Generates upper harmonic overtones (60–140 Hz) that trick the human ear into hearing deep bass without over-excursion of the physical speaker drivers.
+4. **9-Band Precision Equalizer:**
+   - Calibrated EQ curve enhancing lower warmth (142 Hz), vocal presence (220 Hz, 338 Hz, 2.5 kHz), and crystal clear treble (10.7 kHz, 16.5 kHz) with calibrated pre-attenuation headroom.
+5. **Dynamic Range Compressor (DRC):**
+   - Smooths out dynamic range, bringing out subtle acoustic details in dialogue, music, and games while keeping sudden loud spikes controlled.
+6. **Intelligent AutoGain (-16 LUFS):**
+   - Automatically maintains consistent perceived loudness across YouTube, Spotify, games, and system media.
+7. **Transparent Peak Limiter (-0.5 dB):**
+   - Hermetic brickwall peak limiter acts as the ultimate safety shield, ensuring no audio clips or distorts, even at 100% volume.
 
 ---
 
@@ -51,8 +72,8 @@ cd hp-14s-fq2003au-easyeffects
 ```
 
 The script will automatically:
-1. Copy the preset `HP-14s-FQ2003AU.json` to `~/.local/share/easyeffects/output/`.
-2. Copy the required kernel file `Razor Surround ((48k Z-Edition)) 4.Stereo +50 Bass Low Latency.irs` to `~/.local/share/easyeffects/irs/`.
+1. Copy `HP-14s-FQ2003AU.json` and any community presets to `~/.local/share/easyeffects/output/`.
+2. Copy `Razor Surround ((48k Z-Edition)) 4.Stereo +50 Bass Low Latency.irs` to `~/.local/share/easyeffects/irs/`.
 3. Activate the preset immediately in EasyEffects.
 
 ---
@@ -73,7 +94,7 @@ The script will automatically:
 
 3. **Load in EasyEffects:**
    - Open **EasyEffects**.
-   - Go to **Presets** $\rightarrow$ **Output**.
+   - Go to **Presets** → **Output**.
    - Select **`HP-14s-FQ2003AU`** and click **Load**.
 
 ---
@@ -87,7 +108,7 @@ We included an automated frequency test suite to verify your audio:
 ```
 
 This runs:
-- Sweep tone (100 Hz $\rightarrow$ 15,000 Hz)
+- Sweep tone (100 Hz → 15,000 Hz)
 - 142 Hz bass resonance test
 - 220 Hz & 338 Hz low-mid stress test
 - 1000 Hz baseline reference
@@ -97,27 +118,40 @@ This runs:
 
 ---
 
-## ⚙️ Best Practices & System Configuration
+## 💻 Hardware & Distro Compatibility
 
-To prevent audio routing issues with PipeWire and external monitors:
+| Laptop Model | Audio Codec | Linux Distros Tested | Status | Notes |
+| :--- | :--- | :--- | :---: | :--- |
+| **HP 14s-fq2003au** | Realtek ALC236 | Fedora 41, Arch Linux | 🌟 Verified | Primary development device |
+| **HP 14s-fqxxxx** (other models) | Realtek ALC236 | Any Linux | 🟢 Compatible | Same chassis & speakers |
+| **HP 14s-dqxxxx** / **14s-dkxxxx** | Realtek ALC236 / ALC269 | Any Linux | 🟡 Needs Testing | [Submit Test Report](https://github.com/candraalief/hp-14s-fq2003au-easyeffects/issues/new?template=device_report.yml) |
+| **HP Pavilion 14** / **HP 240 G8** | Realtek | Any Linux | 🟡 Needs Testing | [Submit Test Report](https://github.com/candraalief/hp-14s-fq2003au-easyeffects/issues/new?template=device_report.yml) |
+
+> 📢 **Have another HP laptop model?** Help us expand this table! Submit your test results via the [Device Compatibility Issue Form](https://github.com/candraalief/hp-14s-fq2003au-easyeffects/issues/new?template=device_report.yml).
+
+---
+
+## 🤝 Community & Contributing
+
+We welcome contributions from the community! You can contribute by:
+- 🧪 **Testing on different HP laptops** and submitting compatibility reports.
+- 🎛️ **Adding new presets** (e.g., Cinema/Movie, Podcast/Voice, Bass Boost, or model-specific tunings) in `community-presets/`.
+- 🎼 **Sharing Impulse Response (.irs) kernels**.
+- 🛠️ **Improving scripts and audio testing tools**.
+
+Please read our [**Contributing Guide (CONTRIBUTING.md)**](CONTRIBUTING.md) and [**Code of Conduct**](CODE_OF_CONDUCT.md) before submitting a Pull Request.
+
+---
+
+## ⚙️ Best Practices & Troubleshooting
 
 1. **Keep Physical Speaker as Default Sink:**
-   Never set the virtual `easyeffects_sink` as your system's default device. Your physical laptop speaker (`Ryzen HD Audio Controller Speaker`) should always be the default sink. EasyEffects will automatically hook into application streams.
+   Never set the virtual `easyeffects_sink` as your system's default device. Your physical laptop speaker should always be the default sink. EasyEffects will automatically hook into application streams.
    ```bash
    pactl set-default-sink alsa_output.pci-0000_03_00.6.HiFi__Speaker__sink
    ```
 2. **HDMI Display Audio:**
-   If you connect an external HDMI monitor without speakers, disable the HDMI audio profile in System Settings $\rightarrow$ Audio (or set it to `Off`) so it doesn't hijack audio output.
-
----
-
-## 💻 Tested Hardware Specifications
-
-- **Model:** HP Laptop 14s-fq2xxx / HP 14s-fq2003au
-- **CPU:** AMD Ryzen 5 5625U with Radeon Graphics
-- **Audio Codec:** Realtek ALC236
-- **OS:** Fedora Linux / Arch Linux / Ubuntu (Kernel 6.x+)
-- **Audio Server:** PipeWire 1.x + WirePlumber 0.5+
+   If you connect an external HDMI monitor without speakers, disable the HDMI audio profile in System Settings → Audio (or set it to `Off`) so it doesn't hijack audio output.
 
 ---
 
@@ -125,4 +159,4 @@ To prevent audio routing issues with PipeWire and external monitors:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Developed with ❤️ by **[Candra AAP](https://github.com/candraalief)**.
+Developed with ❤️ by **[Candra AAP](https://github.com/candraalief)** and community contributors.

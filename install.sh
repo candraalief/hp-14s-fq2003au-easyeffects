@@ -44,9 +44,14 @@ if [[ ! -f "$PRESET_FILE" ]]; then
 fi
 
 # 3. Create target directories and copy preset + IRS files
-echo -e "${GREEN}[*] Copying preset to $TARGET_OUTPUT_DIR...${NC}"
+echo -e "${GREEN}[*] Copying primary preset to $TARGET_OUTPUT_DIR...${NC}"
 mkdir -p "$TARGET_OUTPUT_DIR"
 cp -v "$PRESET_FILE" "$TARGET_OUTPUT_DIR/"
+
+if compgen -G "$SCRIPT_DIR/community-presets/*.json" > /dev/null; then
+    echo -e "${GREEN}[*] Copying community presets to $TARGET_OUTPUT_DIR...${NC}"
+    cp -v "$SCRIPT_DIR/community-presets/"*.json "$TARGET_OUTPUT_DIR/"
+fi
 
 if [[ -d "$SCRIPT_DIR/irs" ]]; then
     echo -e "${GREEN}[*] Copying impulse response (.irs) files to $TARGET_IRS_DIR...${NC}"

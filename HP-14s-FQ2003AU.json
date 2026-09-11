@@ -13,7 +13,7 @@
         "bass_enhancer#0": {
             "amount": 3.8,
             "blend": 0.0,
-            "bypass": true,
+            "bypass": false,
             "floor": 60.0,
             "floor-active": true,
             "harmonics": 7.5,
@@ -24,7 +24,7 @@
         },
         "equalizer#0": {
             "balance": 0.0,
-            "bypass": true,
+            "bypass": false,
             "decramp": "Off",
             "input-gain": -1.5,
             "mode": "IIR",
@@ -238,7 +238,7 @@
         },
         "compressor#0": {
             "attack": 15.0,
-            "bypass": true,
+            "bypass": false,
             "boost-amount": 4.0,
             "boost-threshold": -72.0,
             "dry-level": -100.0,
@@ -271,7 +271,7 @@
             "alr-knee": 0.0,
             "alr-release": 50.0,
             "attack": 5.0,
-            "bypass": true,
+            "bypass": false,
             "dithering": "None",
             "external-sidechain": false,
             "gain-boost": true,
@@ -286,7 +286,7 @@
             "threshold": -0.5
         },
         "autogain#0": {
-            "bypass": true,
+            "bypass": false,
             "input-gain": 0.0,
             "maximum-history": 15,
             "output-gain": 0.0,
@@ -296,7 +296,7 @@
         },
         "filter#0": {
             "balance": 0.0,
-            "bypass": true,
+            "bypass": false,
             "equal-mode": "IIR",
             "frequency": 75.0,
             "gain": 0.0,
