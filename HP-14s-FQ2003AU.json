@@ -286,7 +286,7 @@
             "threshold": -0.5
         },
         "autogain#0": {
-            "bypass": false,
+            "bypass": true,
             "input-gain": 0.0,
             "maximum-history": 15,
             "output-gain": 0.0,
